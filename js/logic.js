@@ -19,10 +19,10 @@
 				{
 					document.getElementById("master").innerHTML = localStorage.getItem("saveSteam");
 				}
-			}else
-			{
-				alert("Denne app henter tilbud fra Steam's tilbudsavis og sorterer dem efter rabatten.")
 			}
+		}else
+		{
+			alert("Denne app henter tilbud fra Steam's tilbudsavis og sorterer dem efter rabatten.")
 		}
 	}
 
