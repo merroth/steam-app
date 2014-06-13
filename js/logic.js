@@ -8,6 +8,7 @@
 			return false;
 		}
 	}
+	alert(s5s())
 	
 	if(s5s())
 	{
@@ -222,3 +223,4 @@
 			fetch(counter,container);
 		}
 	}
+localStorage.setItem("saveSteam", "");
