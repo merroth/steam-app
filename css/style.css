@@ -1,0 +1,49 @@
+@charset "utf-8";
+/* CSS Document */
+
+.search_result_row
+{
+	width:100%;
+	height: 58px;
+	float:left;
+	background-color: #1F1F1F;
+	color:white;
+	display: table;
+    table-layout: fixed;
+}
+.search_result_row .col
+{
+	display: table-cell;
+	text-align:center;
+	vertical-align:middle;
+	/*width:17%;*/
+}
+.search_result_row:nth-child(odd)
+{
+	background-color: #1A1A1A;
+}
+#status
+{
+	position: fixed;
+    text-align: center;
+    top: 0;
+    width: 100%;
+	background-color:rgba(228, 228, 228,0.8);
+}
+.hide
+{
+	display:none;
+}
+.percentage_price
+{
+	background-color: #4C6B22;
+}
+
+#master
+{
+	margin-top:90px;
+}
+#option-line label
+{
+	margin: 2%;
+}

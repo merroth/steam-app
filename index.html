@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="viewport" content="user-scalable=yes, initial-scale=0.5, maximum-scale=1, minimum-scale=0.25" />
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		
+		<title>Steam-app</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<div id="status">
+			<h1 id="status-label" onClick="clickActivate(this)">Click here to update list</h1>
+			<form id="option-line">
+				<label>APPS
+				<input type="checkbox" id="app" name="app" value="app" checked onclick="check(this,'ico_type_app.gif');">
+				</label>
+				<label>PACKS
+				<input type="checkbox" id="pack" name="pack" value="pack" checked onclick="check(this,'ico_type_sub.gif');">
+				</label>
+				<label>DLC
+				<input type="checkbox" id="dlc" name="dlc" value="dlc" checked onclick="check(this,'ico_type_dlc.gif');">
+				</label>
+			</select>
+			</form>
+		</div>
+		<div id="master">
+			<h1>No list in memory. Press update.</h1>
+		</div>
+		
+		<div id="test" class="hide">
+		</div>
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js">
+		</script>
+		<script type="text/javascript" src="js/logic.js">
+		</script>
+		
+	</body>
+</html>
