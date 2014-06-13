@@ -35,7 +35,7 @@
 		loop++;
 		$.ajax({
 			type: "GET",
-			timeout: (1000 * 25),
+			timeout: 600000,
 			url: "http://emilsj.dk/Andre_Filer/JavaScript/steam/getSteam.php",
 			data: {"i":loop},
 			success: function(response)
@@ -70,10 +70,6 @@
 				{
 					fetch(counter,container);
 				}
-			},
-			error: function(x, t, m)
-			{
-				alert("En fejl af typen \""+t+"\" blev opfanget.\n\nTjek at du har internet forbindelse og prøv igen.");
 			}
 		});
 	}
