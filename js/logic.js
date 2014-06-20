@@ -69,7 +69,7 @@
 						container.appendChild(element);			
 					}
 				});
-				if(loop <=50)
+				if(loop <=500)
 				{
 					fetch(counter,container);
 				}

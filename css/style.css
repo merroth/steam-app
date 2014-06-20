@@ -27,8 +27,8 @@
 	position: fixed;
     text-align: center;
     top: 0;
-    width: 100%;
 	background-color:rgba(228, 228, 228,0.8);
+	width:100%;
 }
 .hide
 {
