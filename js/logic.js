@@ -50,7 +50,6 @@
 				if(dots.lastIndexOf("...") != -1)
 				{
 					dots = ".";
-
 				}else
 				{
 					dots+=".";
@@ -116,6 +115,13 @@
 				var price = parseFloat(str[1].replace(",",".").replace("€","").replace("--",""))
 				var percent = 100 - ((100 / org ) *price).toFixed(0);
 				JsonList[i].percent = percent;				
+				
+				var p = document.createElement("p");
+				
+				p.innerHTML = percent+"%";
+				p.classList.add("percentage_price");
+				node.appendChild(p);
+							
 			}else
 			{
 				delete JsonList[i];
