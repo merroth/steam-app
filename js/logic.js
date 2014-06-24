@@ -30,114 +30,128 @@
 	var counter = 1;
 	var loop = 0;
 	var container = document.createElement("div");
+	var JsonList = {};
+	var dots = "";
 	var working = false;
-	//document.getElementById("test").appendChild(container);
-	
-	function fetch(counter,container)
+	function objLen(obj)
+	{
+		return parseInt(Object.keys(obj).length);
+	}
+	function fetch(counter,container,dots,JsonList)
 	{
 		loop++;
 		$.ajax({
 			type: "GET",
-			timeout: (1000 * 25),
+			timeout: (1000 * 60),
 			url: "http://emilsj.dk/Andre_Filer/JavaScript/steam/getSteam.php",
 			data: {"i":loop},
 			success: function(response)
 			{
-				if(response.toString().length < 500)
+				if(dots.lastIndexOf("...") != -1)
 				{
-					document.getElementById("status-label").innerHTML = "Done";
-					
-					//$("#option-line").delay(1000).fadeIn(1000);
-					
-					getPercentage();
-					
-					return false;
-				}
-				if(document.getElementById("status-label").innerHTML.lastIndexOf("...") != -1)
-				{
-					document.getElementById("status-label").innerHTML = document.getElementById("status-label").innerHTML.replace("...",".");
+					dots = ".";
+
 				}else
 				{
-					document.getElementById("status-label").innerHTML+=".";
+					dots+=".";
 				}
+				document.getElementById("status-label").innerHTML = "Working"+dots+" ("+loop+")";
 				//console.log(response);
 				$($.parseHTML(response)).each(function(index, element) {
 					if(typeof(element.innerHTML) !== "undefined")
 					{
-						element.setAttribute("class",'search_result_row');		
+						element.setAttribute("class",'search_result_row');
 						
+						var key = objLen(JsonList);
+						
+						JsonList[key] = {
+							id : key,
+							node : element
+							};
+												
 						container.appendChild(element);			
 					}
 				});
-				if(loop <=500)
-				{
-					fetch(counter,container);
-				}
 			},
 			error: function(x, t, m)
 			{
 				alert("En fejl af typen \""+t+"\" blev opfanget.\n\nTjek at du har internet forbindelse og prøv igen.");
+			},
+			complete: function(response)
+			{
+				console.log({loop:loop,response:response});
+				if(response.responseText.toString().length < 5000)
+				{
+					console.log("done")
+					getPercentage();
+					document.getElementById("status-label").innerHTML = "Done";
+					
+					//$("#option-line").delay(1000).fadeIn(1000);
+					return false;
+				}
+				if(loop <=500)
+				{
+					setTimeout(function()
+					{
+						fetch(counter,container,dots,JsonList);
+					},250);
+				}
 			}
 		});
 	}
 	function getPercentage()
 	{
-		for(var i in container.getElementsByClassName("search_price"))
-		{
-			for( var x in container.getElementsByClassName("search_price")[i].childNodes)
-			{
-				if( container.getElementsByClassName("search_price")[i].childNodes[x].nodeName == "#text" )
-				{
-					var price = parseFloat( container.getElementsByClassName("search_price")[i].childNodes[x].textContent.replace(",",".").replace("€","") )
-				}
-				if( container.getElementsByClassName("search_price")[i].childNodes[x].nodeName == "SPAN" )
-				{
-					var org = parseFloat(container.getElementsByClassName("search_price")[i].childNodes[x].innerHTML.replace(",",".").replace("<strike>","").replace("€ </strike>",""));
-				}
-			}
-			if( typeof(container.getElementsByClassName("search_price")[i]) === "object" )
-			{
-				if(container.getElementsByClassName("search_price")[i].getElementsByClassName("percentage_price").length < 1)
-				{
-					var p = document.createElement("p");
-					p.innerHTML = (100 - ((100 / org) * price)).toFixed(0) + "%";
-					p.setAttribute("class","percentage_price");
+		var d = new Date();
 		
-					if(container.getElementsByClassName("search_price")[i].nodeName == "DIV")
-					{
-						container.getElementsByClassName("search_price")[i].appendChild(p);
-					}
-				}
-			}
-		}
-		for(var y = 0; y<= 1000; y++)
+		console.log("--------");
+		
+		for(var i in JsonList)
 		{
-			var change = false;
-			var prev = 12, current = 1;
-			for(var i in container.getElementsByClassName("search_price"))
+			var node = JsonList[i].node.getElementsByClassName("search_price");
+			if(node.length > 0)
 			{
-				if(container.getElementsByClassName("search_price")[i].nodeName == "DIV")
-				{
-					var current = container.getElementsByClassName("search_price")[i].getElementsByClassName("percentage_price")[0].innerHTML.replace("%","").replace(" ","");
-				}
-				if(current > prev)
-				{
-					var prevNode = container.getElementsByClassName("search_price")[(i-1)];
-					currNode = (container.getElementsByClassName("search_price")[i])
-					if(typeof(prevNode) !== "undefined")
-					{
-						change = true;
-						container.insertBefore(currNode.parentNode,prevNode.parentNode);
-					}
-				}
-				prev = current;
-			}
-			if(!change)
+				node = node[0];
+				var str =  (node.textContent || node.innerText || "").split("€");
+				var org = parseFloat(str[0].replace(",",".").replace("€","").replace("--",""))
+				var price = parseFloat(str[1].replace(",",".").replace("€","").replace("--",""))
+				var percent = 100 - ((100 / org ) *price).toFixed(0);
+				JsonList[i].percent = percent;				
+			}else
 			{
-				save(container);
-				return false;
+				delete JsonList[i];
 			}
 		}
+		
+		console.log(new Date() - d, "ms: Percent calculated");
+		
+		var c = document.createElement("div"),
+		
+		JsonList2 = clone(JsonList)
+		key = objLen(JsonList),
+		curr = {};
+		for(var i = 0; i < key + 5; i++)
+		{
+			var best = {id : null, node : 0, percent : 0},
+			change = false;
+			for(var x in JsonList2)
+			{
+				if(JsonList2[x].percent > best.percent)
+				{
+					change = true;
+					best = JsonList2[x];
+				}
+			}
+			if(change)
+			{
+				c.appendChild(best.node);
+				delete JsonList2[best.id];
+			}
+		}
+		console.log(new Date() - d, "ms: Dom Node Created");
+		
+		container = c;
+		save(container);
+		return false;
 	}
 	function check(sender,str)
 	{
@@ -185,7 +199,7 @@
 	{
 		function cleanUp()
 		{
-			for(var x =1; x < 200;x++)
+			for(var x =1; x < 500;x++)
 			{
 				for(var i in container.childNodes)
 				{
@@ -226,6 +240,27 @@
 			sender.innerHTML = "Working";
 			document.getElementById("option-line").classList.add("hide");
 
-			fetch(counter,container);
+			fetch(counter,container,dots,JsonList);
 		}
 	}
+// Sort
+function sortfunction(a, b)
+{
+	return (a.percent - b.percent)
+}
+function clone (obj)
+{
+	if (null == obj || "object" != typeof obj)
+	{
+		return obj;
+	}
+	var copy = obj.constructor();
+	for (var attr in obj)
+	{
+		if (obj.hasOwnProperty(attr))
+		{
+	copy[attr] = obj[attr];
+		}
+	}
+	return copy;
+}
