@@ -22,7 +22,7 @@
 			}
 		}else
 		{
-			alert("Denne app henter tilbud fra Steam's tilbudsavis og sorterer dem efter rabatten.")
+			alert("Denne app henter tilbud fra Steam's tilbudsavis og sorterer dem efter rabatten.\nNogle gange som ved Steam Summer Sale er der op mod 300 siders tilbud, så vær tålmodig")
 		}
 	}
 
@@ -114,7 +114,7 @@
 				var org = parseFloat(str[0].replace(",",".").replace("€","").replace("--",""))
 				var price = parseFloat(str[1].replace(",",".").replace("€","").replace("--",""))
 				var percent = 100 - ((100 / org ) *price).toFixed(0);
-				JsonList[i].percent = percent;				
+				JsonList[i].percent = percent;	
 				
 				var p = document.createElement("p");
 				
