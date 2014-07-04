@@ -154,7 +154,7 @@
 			}
 		}
 		console.log(new Date() - d, "ms: Dom Node Created");
-		
+		JsonList = {};
 		container = c;
 		save(container);
 		return false;
