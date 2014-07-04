@@ -30,6 +30,10 @@
 	background-color:rgba(228, 228, 228,0.8);
 	width:100%;
 }
+#status *
+{
+	margin-bottom:2em;
+}
 .hide
 {
 	display:none;
@@ -41,7 +45,7 @@
 
 #master
 {
-	margin-top:90px;
+	margin-top:160px;
 }
 #option-line label
 {

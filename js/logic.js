@@ -110,32 +110,17 @@
 			if(node.length > 0)
 			{
 				node = node[0];
-				var test = true;
-				for(var y in node.children)
-				{
-					if(typeof(node.children[y].nodeName) === "string")
-					{
-						if(node.children[y].nodeName.toLowerCase() == "p")
-						{
-							test = false;
-						}
-					}
-				}
-				if(test)
-				{
-					var str =  (node.textContent || node.innerText || "").split("€");
-					var org = parseFloat(str[0].replace(",",".").replace("€","").replace("--",""))
-					var price = parseFloat(str[1].replace(",",".").replace("€","").replace("--",""))
-					var percent = 100 - ((100 / org ) *price).toFixed(0);
-					JsonList[i].percent = percent;	
-					
-					var p = document.createElement("p");
-					
-					p.innerHTML = percent+"%";
-					p.classList.add("percentage_price");
-					//console.log(node.children);
-					node.appendChild(p);
-				}
+				var str =  (node.textContent || node.innerText || "").split("€");
+				var org = parseFloat(str[0].replace(",",".").replace("€","").replace("--",""))
+				var price = parseFloat(str[1].replace(",",".").replace("€","").replace("--",""))
+				var percent = 100 - ((100 / org ) *price).toFixed(0);
+				JsonList[i].percent = percent;	
+				
+				var p = document.createElement("p");
+				
+				p.innerHTML = percent+"%";
+				p.classList.add("percentage_price");
+				node.appendChild(p);
 							
 			}else
 			{
