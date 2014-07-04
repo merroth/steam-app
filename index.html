@@ -11,6 +11,7 @@
 	</head>
 	<body>
 		<div id="status">
+	<span id="loaded">
 			<h1 id="status-label" onClick="clickActivate(this)">Click here to update list</h1>
 			<form id="option-line">
 				<label>APPS
@@ -24,6 +25,10 @@
 				</label>
 			</select>
 			</form>
+	</span>
+	<div id="minify" onclick="minify(this)">
+		↑
+	</div>
 		</div>
 		<div id="master">
 			<h1>No list in memory. Press update.</h1>

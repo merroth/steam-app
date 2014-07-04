@@ -1,6 +1,9 @@
 @charset "utf-8";
 /* CSS Document */
-
+*{
+	margin:0px;
+	padding:0px;
+}
 .search_result_row
 {
 	width:100%;
@@ -45,10 +48,22 @@
 
 #master
 {
-	margin-top:160px;
+	margin-top:198px;
+}
+.full-master
+{
+	margin-top: 53px !important;
 }
 #option-line label
 {
 	font-size: 1.5em;
     margin: 4%;
+}
+#minify
+{
+	text-align:right;
+	font-size:2em;
+	background-color:rgba(72, 98, 163,0.8);
+	margin-bottom: 0em;
+	padding:0.5em 1em;
 }

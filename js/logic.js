@@ -249,6 +249,28 @@
 			fetch(counter,container,dots,JsonList);
 		}
 	}
+	function minify(sender)
+	{
+
+
+
+
+
+		var target = document.getElementById("loaded");
+
+
+		if(sender.innerHTML.lastIndexOf("↑") >=0)
+		{
+			sender.innerHTML = "↓";
+			$(target).hide();
+			document.getElementById("master").classList.add("full-master");
+		}else
+		{
+			document.getElementById("master").classList.remove("full-master");
+			sender.innerHTML = "↑";
+			$(target).show();
+		}
+	}
 // Sort
 function sortfunction(a, b)
 {
